@@ -1,19 +1,28 @@
 import React, { Component } from "react";
 import Home from "./Home";
 import Header from "./Header";
-import { Box } from "rebass";
+import { Flex, Box } from "rebass";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Recipe from "./Recipe";
+import Footer from "./Footer";
 
 class App extends Component {
     render() {
         return (
             <ThemeProvider theme={theme}>
-                <Box>
-                    <Header />
-                    <Home />
-                </Box>
+                <Router>
+                    <Flex flexDirection="column" css={{ minHeight: "100vh" }}>
+                        <Header />
+                        <Box css={{ flexGrow: 1 }}>
+                            <Route path="/" exact component={Home} />
+                            <Route path="/recipe/" component={Recipe} />
+                        </Box>
+                        <Footer />
+                    </Flex>
+                </Router>
             </ThemeProvider>
         );
     }

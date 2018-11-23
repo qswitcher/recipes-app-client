@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, Flex, Link, Image, Heading, Text } from "rebass";
+import { Box, Card, Flex, Image, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faStar as faRegularStar,
@@ -7,6 +7,8 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faStar, faTable, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { Recipes } from "./data";
+import Link from "./Link";
+
 import "./Home.css";
 
 class Home extends React.Component {
@@ -117,21 +119,18 @@ class Home extends React.Component {
                                         </Box>
 
                                         <Box p={3}>
-                                            <Link
-                                                href="/"
-                                                color="gray.1"
-                                                css={{
-                                                    textDecoration: "none",
-                                                    "&:hover": {
-                                                        color: "#6ba72b"
-                                                    },
-                                                    transition:
-                                                        "all 0.2s ease-in-out"
-                                                }}
-                                            >
+                                            <Link to="/recipe/">
                                                 <Heading
                                                     as="h2"
                                                     fontWeight="400"
+                                                    color="gray.1"
+                                                    css={{
+                                                        "&:hover": {
+                                                            color: "#6ba72b"
+                                                        },
+                                                        transition:
+                                                            "all 0.2s ease-in-out"
+                                                    }}
                                                 >
                                                     {title}
                                                 </Heading>
