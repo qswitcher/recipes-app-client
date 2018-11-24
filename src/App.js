@@ -16,7 +16,7 @@ class App extends Component {
                 <Router>
                     <Flex flexDirection="column" css={{ minHeight: "100vh" }}>
                         <Header />
-                        <Box css={{ flexGrow: 1 }}>
+                        <Box py="4" px="2" css={{ flexGrow: 1 }}>
                             <Route path="/" exact component={Home} />
                             <Route path="/recipe/" component={Recipe} />
                         </Box>
