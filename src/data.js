@@ -9,7 +9,18 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/france-confectionery-83373-848x477.jpg",
         recipeYield: "5 Cups",
         servings: 4,
-        cookTime: 5
+        cookTime: 5,
+        ingredients: [
+            "4 tablespoons butter",
+            "1 teaspoon salt",
+            "2 large red onions, thinly sliced",
+            "2 large sweet onions, thinly sliced",
+            "1 (48 floud once) can chicken broth",
+            "1 (14 ounce) can beef broth",
+            "1/2 cup red wine",
+            "1 tablespoon Worcestershire sauce",
+            "2 sprigs fresh parsley"
+        ]
     },
     {
         title: "Avocado panzanella salad",
