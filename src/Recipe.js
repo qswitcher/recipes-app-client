@@ -24,13 +24,14 @@ class Recipe extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            checked: false
-        };
+        const recipe = Recipes[0];
+        this.state = { checked: recipe.ingredients.map(() => false) };
     }
 
-    handleChecked = () => {
-        this.setState({ checked: !this.state.checked });
+    handleChecked = index => event => {
+        const checked = [...this.state.checked];
+        checked[index] = !checked[index];
+        this.setState({ checked });
     };
 
     render() {
@@ -82,8 +83,14 @@ class Recipe extends React.Component {
                                         return (
                                             <NakedLi key={index}>
                                                 <Checkbox
-                                                    checked={this.state.checked}
-                                                    onCheck={this.handleChecked}
+                                                    checked={
+                                                        this.state.checked[
+                                                            index
+                                                        ]
+                                                    }
+                                                    onCheck={this.handleChecked(
+                                                        index
+                                                    )}
                                                     label={ingredient}
                                                 />
                                             </NakedLi>
