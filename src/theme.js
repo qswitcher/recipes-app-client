@@ -13,7 +13,7 @@ export default {
         green: "#6ba72b"
     },
     space: [0, 4, 8, 16, 32, 64, 128, 256],
-    lineHeights: [1.25, 1.4],
+    lineHeights: [1.25, 1.4, 2],
     li: {
         listStyleType: "none"
     }

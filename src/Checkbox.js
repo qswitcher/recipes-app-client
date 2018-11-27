@@ -9,8 +9,10 @@ const Toggle = styled.div`
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
+    margin-top: 3px;
+    margin-bottom: 3px;
     margin-right: ${({ theme: { space } }) => space[2]}px;
     background-color: ${({ checked, theme: { colors } }) =>
         checked ? colors.green : colors.white}
@@ -25,7 +27,7 @@ const HiddenInput = styled.input`
 
 const FlexLabel = styled.label`
     display: flex;
-    align-items: center;
+    align-items: ${({ align }) => align || "center"};
     cursor: pointer;
 `;
 
@@ -33,14 +35,16 @@ const CheckboxLabel = styled.span`
     color: ${({ theme: { colors }, checked }) =>
         checked ? colors.gray[2] : colors.gray[1]};
     text-decoration: ${({ checked }) => (checked ? "line-through" : "none")};
+    white-space: pre-line;
+    line-height: ${({ theme }) => theme.lineHeights[2]};
 `;
 
 class Checkbox extends React.Component {
     render() {
-        const { label, checked, onCheck } = this.props;
+        const { label, align, checked, onCheck } = this.props;
 
         return (
-            <FlexLabel>
+            <FlexLabel align={align}>
                 <HiddenInput
                     type="checkbox"
                     checked={checked}

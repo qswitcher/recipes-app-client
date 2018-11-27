@@ -20,6 +20,11 @@ export const Recipes = [
             "1/2 cup red wine",
             "1 tablespoon Worcestershire sauce",
             "2 sprigs fresh parsley"
+        ],
+        instructions: [
+            "Melt butter in a large pot over medium-high heat. Stir in salt, red onions and sweet onions. Cook 35 minutes, stirring frequently, until onions are caramelized and almost syrupy.",
+            "Mix chicken broth, beef broth, red wine and Worcestershire sauce into pot. Bundle the parsley, thyme, and bay leaf with twine and place in pot. Simmer over medium heat for 20 minutes, stirring occasionally. Remove and discard the herbs. Reduce the heat to low, mix in vinegar and season with salt and pepper. Cover and keep over low heat to stay hot while you prepare the bread.",
+            "Preheat oven broiler. Arrange bread slices on a baking sheet and broil 3 minutes, turning once, until well toasted on both sides. Remove from heat; do not turn off broiler."
         ]
     },
     {
