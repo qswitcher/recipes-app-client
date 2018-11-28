@@ -9,7 +9,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/france-confectionery-83373-848x477.jpg",
         recipeYield: "5 Cups",
         servings: 4,
-        cookTime: 5,
+        cookTime: "5 min",
         ingredients: [
             "4 tablespoons butter",
             "1 teaspoon salt",
@@ -35,7 +35,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/salad-468902_1920-848x477.jpg",
         recipeYield: "2 Bowls",
         servings: 4,
-        cookTime: 15
+        cookTime: "15 min"
     },
     {
         title: "Kale and Feta Salad",
@@ -45,7 +45,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/salad-374173_1920-848x477.jpg",
         recipeYield: "3 Bowls",
         servings: 4,
-        cookTime: 15
+        cookTime: "15 min"
     },
     {
         title: "Boilermaker Tailgate Chili",
@@ -55,7 +55,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/soup-848x477.jpg",
         recipeYield: "7 Bowls",
         servings: 4,
-        cookTime: 35
+        cookTime: "35 min"
     },
     {
         title: "Vegetarian Korma",
@@ -65,7 +65,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/beef-468171_1920-848x477.jpg",
         recipeYield: "1 Plate",
         servings: 4,
-        cookTime: 45
+        cookTime: "45 min"
     },
     {
         title: "Sweet Potato Burritos",
@@ -75,7 +75,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/salad-609645_1920-848x477.jpg",
         recipeYield: "2 Burritos",
         servings: 5,
-        cookTime: 30
+        cookTime: "30 min"
     },
     {
         title: "Butternut Squash Bake",
@@ -85,7 +85,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/vegan-848x477.jpg",
         recipeYield: "1 Bowl",
         servings: 6,
-        cookTime: 60
+        cookTime: "60 min"
     },
     {
         title: "Brazilian Black Bean Stew",
@@ -95,7 +95,7 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/cake-219595_1920-848x477.jpg",
         recipeYield: "3 Bowls",
         servings: 5,
-        cookTime: 55
+        cookTime: "55 min"
     },
     {
         title: "Summer Chicken Burgers",
@@ -105,6 +105,6 @@ export const Recipes = [
             "http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/meat-pie-514416_1920-848x477.jpg",
         recipeYield: "5 Burgers",
         servings: 5,
-        cookTime: 20
+        cookTime: "20 min"
     }
 ];

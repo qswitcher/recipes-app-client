@@ -1,13 +1,11 @@
 import React from "react";
 import { Box, Card, Flex, Image, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faStar as faRegularStar,
-    faClock
-} from "@fortawesome/free-regular-svg-icons";
-import { faStar, faTable, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Recipes } from "./data";
 import Link from "./Link";
+import RecipeStats from "./RecipeStats";
 
 import "./Home.css";
 
@@ -142,61 +140,11 @@ class Home extends React.Component {
                                         }}
                                         p={3}
                                     >
-                                        <Flex alignItems="center">
-                                            <FontAwesomeIcon
-                                                icon={faTable}
-                                                size="sm"
-                                                color="#676767"
-                                            />
-
-                                            <Text
-                                                fontSize={1}
-                                                color="gray.1"
-                                                lineHeight="1.8"
-                                                ml="2"
-                                            >
-                                                {recipeYield}
-                                            </Text>
-                                        </Flex>
-                                        <Flex
-                                            justifyContent="center"
-                                            alignItems="center"
-                                            mr="3"
-                                            ml="3"
-                                        >
-                                            <FontAwesomeIcon
-                                                icon={faUsers}
-                                                size="sm"
-                                                color="#676767"
-                                            />
-
-                                            <Text
-                                                fontSize={1}
-                                                color="gray.1"
-                                                lineHeight="1.8"
-                                                ml="2"
-                                            >
-                                                {servings}
-                                            </Text>
-                                        </Flex>
-                                        <Flex
-                                            justifyContent="center"
-                                            alignItems="center"
-                                        >
-                                            <FontAwesomeIcon
-                                                icon={faClock}
-                                                size="sm"
-                                                color="#676767"
-                                            />
-                                            <Text
-                                                fontSize={1}
-                                                color="gray.1"
-                                                lineHeight="1.8"
-                                                ml="2"
-                                            >
-                                                {cookTime}
-                                            </Text>
-                                        </Flex>
+                                        <RecipeStats
+                                            recipeYield={recipeYield}
+                                            cookTime={cookTime}
+                                            servings={servings}
+                                        />
                                     </Flex>
                                 </Card>
                             </Box>

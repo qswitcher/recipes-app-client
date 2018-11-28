@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
+import RecipeStats from "./RecipeStats";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
@@ -87,6 +88,9 @@ class Recipe extends React.Component {
                             >
                                 {longDescription}
                             </Text>
+                            <Flex mx="4">
+                                <RecipeStats {...recipe} size="md" />
+                            </Flex>
                         </Box>
 
                         <Image
