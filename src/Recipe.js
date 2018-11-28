@@ -24,16 +24,6 @@ const NakedLi = styled.li`
     margin-bottom: ${({ theme: { space } }) => space[2]}px;
 `;
 
-const FlexLi = styled.li`
-    list-style-type: none;
-    font-size: ${({ theme: { fontSizes } }) => fontSizes[1]}px;
-    margin-bottom: ${({ theme: { space } }) => space[2]}px;
-    display: flex;
-    justify-content: space-between;
-    &:not(:first-child) {
-        border-top: 1px solid #eee;
-    }
-`;
 const recipe = Recipes[0];
 
 class Recipe extends React.Component {

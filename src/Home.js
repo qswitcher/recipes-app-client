@@ -7,8 +7,6 @@ import { Recipes } from "./data";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 
-import "./Home.css";
-
 class Home extends React.Component {
     render() {
         return (
