@@ -13,7 +13,7 @@ const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
 `;
 
-const IngredientList = styled.ul`
+const List = styled.ul`
     padding: 0;
 `;
 
@@ -23,6 +23,16 @@ const NakedLi = styled.li`
     margin-bottom: ${({ theme: { space } }) => space[2]}px;
 `;
 
+const FlexLi = styled.li`
+    list-style-type: none;
+    font-size: ${({ theme: { fontSizes } }) => fontSizes[1]}px;
+    margin-bottom: ${({ theme: { space } }) => space[2]}px;
+    display: flex;
+    justify-content: space-between;
+    &:not(:first-child) {
+        border-top: 1px solid #eee;
+    }
+`;
 const recipe = Recipes[0];
 
 class Recipe extends React.Component {
@@ -57,7 +67,7 @@ class Recipe extends React.Component {
         } = Recipes[0];
         return (
             <Flex flexWrap="wrap" m="auto" css={{ maxWidth: "72em" }}>
-                <Box p="2" width={[1, 1, 2 / 3]}>
+                <Box p="2" width={[1, 1, 4 / 5]}>
                     <Card
                         bg="white"
                         borderRadius={3}
@@ -99,7 +109,7 @@ class Recipe extends React.Component {
                                         />
                                         <RightSpan>Ingredients</RightSpan>
                                     </Heading>
-                                    <IngredientList>
+                                    <List>
                                         {ingredients.map(
                                             (ingredient, index) => {
                                                 return (
@@ -120,7 +130,7 @@ class Recipe extends React.Component {
                                                 );
                                             }
                                         )}
-                                    </IngredientList>
+                                    </List>
                                 </Box>
                                 <Box width={[1, 1, 1, 1 / 2]} mt="4">
                                     <Heading
@@ -135,7 +145,7 @@ class Recipe extends React.Component {
                                         />
                                         <RightSpan>Steps</RightSpan>
                                     </Heading>
-                                    <IngredientList>
+                                    <List>
                                         {instructions.map(
                                             (instruction, index) => {
                                                 return (
@@ -161,20 +171,69 @@ class Recipe extends React.Component {
                                                 );
                                             }
                                         )}
-                                    </IngredientList>
+                                    </List>
                                 </Box>
                             </Flex>
                         </Box>
                     </Card>
                 </Box>
-                <Flex p="2" width={[1, 1, 1 / 3]} flexDirection="column">
+                <Flex p="2" width={[1, 1, 1 / 5]} flexDirection="column">
                     <Card
-                        p={5}
+                        p={3}
                         bg="white"
                         borderRadius={3}
                         boxShadow="0 1px 2px rgba(0, 0, 0, 0.1)"
                     >
-                        Box
+                        <List>
+                            <FlexLi>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    Yield
+                                </Text>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    {recipe.recipeYield}
+                                </Text>
+                            </FlexLi>
+                            <FlexLi>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    Servings
+                                </Text>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    {recipe.servings}
+                                </Text>
+                            </FlexLi>
+                            <FlexLi>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    Cook Time
+                                </Text>
+                                <Text
+                                    color="gray.1"
+                                    lineHeight="1.8"
+                                    fontSize="1"
+                                >
+                                    {recipe.cookTime}
+                                </Text>
+                            </FlexLi>
+                        </List>
                     </Card>
                 </Flex>
             </Flex>
