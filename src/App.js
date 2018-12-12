@@ -4,10 +4,15 @@ import Header from "./Header";
 import { Flex, Box } from "rebass";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
-import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Recipe from "./Recipe";
 import Footer from "./Footer";
+import Amplify from "aws-amplify";
+import aws_exports from "./aws-exports";
+import { withAuthenticator } from "aws-amplify-react";
+import "./App.css";
+
+Amplify.configure(aws_exports);
 
 class App extends Component {
     render() {
@@ -28,4 +33,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withAuthenticator(App, true);
