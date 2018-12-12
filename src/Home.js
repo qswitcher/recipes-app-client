@@ -16,16 +16,19 @@ class Home extends React.Component {
                 m="auto"
             >
                 {Recipes.map(
-                    ({
-                        title,
-                        shortDescription,
-                        thumbnail,
-                        recipeYield,
-                        cookTime,
-                        servings
-                    }) => {
+                    (
+                        {
+                            title,
+                            shortDescription,
+                            thumbnail,
+                            recipeYield,
+                            cookTime,
+                            servings
+                        },
+                        i
+                    ) => {
                         return (
-                            <Box width={[1, 1 / 2, 1 / 3]} p="3">
+                            <Box width={[1, 1 / 2, 1 / 3]} p="3" key={i}>
                                 <Card
                                     bg="white"
                                     borderRadius={3}
@@ -76,8 +79,9 @@ class Home extends React.Component {
                                                                         faStar
                                                                     }
                                                                     size="sm"
-                                                                    index={
-                                                                        index
+                                                                    key={
+                                                                        index +
+                                                                        i * 10
                                                                     }
                                                                     mask={[
                                                                         "far"
@@ -96,7 +100,7 @@ class Home extends React.Component {
                                                         <FontAwesomeIcon
                                                             icon={faRegularStar}
                                                             size="sm"
-                                                            index={index}
+                                                            key={index + i * 10}
                                                             mask={["far"]}
                                                             color="#676767"
                                                         />
