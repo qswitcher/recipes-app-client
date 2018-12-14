@@ -49,7 +49,41 @@ class App extends Component {
                     authState="signIn"
                     onStateChange={authState => console.log(authState)}
                     hide={[Greetings, Loading]}
-                    theme={{ button: { backgroundColor: "blue" } }}
+                    theme={{
+                        formSection: {
+                            borderRadius: "3px",
+                            boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)"
+                        },
+                        button: {
+                            backgroundColor: "#6ba72b",
+                            borderRadius: "3px",
+                            textTransform: "none",
+                            fontSize: "14px",
+                            lineHeight: "24px",
+                            padding: "5px 10px"
+                        },
+                        sectionHeader: {
+                            color: "#676767",
+                            fontSize: "28px",
+                            lineHeight: "1.25"
+                        },
+                        formField: {
+                            color: "#676767"
+                        },
+                        inputLabel: {
+                            color: "#676767"
+                        },
+                        input: {
+                            color: "#676767",
+                            backgroundColor: "#f5f5f5",
+                            border: "none",
+                            lineHeight: "24px",
+                            padding: "6px 12px"
+                        },
+                        a: {
+                            color: "#6ba72b"
+                        }
+                    }}
                 >
                     {/* Authenticator expects an array of components, so this ones just a dummy*/}
                     <Dummy />
