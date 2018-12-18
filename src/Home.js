@@ -3,19 +3,32 @@ import { Box, Card, Flex, Image, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { Recipes } from "./data";
+import { API, graphqlOperation } from "aws-amplify";
+import { listRecipes } from "./graphql/queries";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 
 class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { recipes: [] };
+    }
+
+    componentDidMount() {
+        API.graphql(graphqlOperation(listRecipes)).then(response => {
+            this.setState({ recipes: response.data.listRecipes.items });
+        });
+    }
+
     render() {
+        console.log(this.state.recipes);
         return (
             <Flex
                 flexWrap="wrap"
                 width={["1", "38em", "50em", "62em", "72em"]}
                 m="auto"
             >
-                {Recipes.map(
+                {this.state.recipes.map(
                     (
                         {
                             title,

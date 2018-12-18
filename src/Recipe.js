@@ -9,6 +9,8 @@ import {
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
 import RecipeStats from "./RecipeStats";
+import { API, graphqlOperation } from "aws-amplify";
+import { getRecipe } from "./graphql/queries";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
@@ -33,8 +35,19 @@ class Recipe extends React.Component {
         this.state = {
             checked: [...recipe.ingredients, ...recipe.instructions].map(
                 () => false
-            )
+            ),
+            recipe: null
         };
+    }
+
+    componentDidMount() {
+        API.graphql(
+            graphqlOperation(getRecipe, {
+                id: "14a0b4d3-8c86-40f9-b62c-abbd99d3db26"
+            })
+        ).then(response => {
+            this.setState({ recipe: response.data.getRecipe });
+        });
     }
 
     handleIngredientChecked = index => event =>
@@ -50,12 +63,12 @@ class Recipe extends React.Component {
     };
 
     render() {
-        const {
-            title,
-            longDescription,
-            ingredients,
-            instructions
-        } = Recipes[0];
+        if (!this.state.recipe) {
+            return null;
+        }
+        const recipe = this.state.recipe;
+
+        const { title, longDescription, ingredients, instructions } = recipe;
         return (
             // <Flex flexWrap="wrap" m="auto" css={{ maxWidth: "72em" }}>
             <Box p="2" width={[1, 1, 1]} m="auto" css={{ maxWidth: "64em" }}>
