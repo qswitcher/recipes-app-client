@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import Home from "./Home";
-import Header from "./Header";
 import { Flex, Box } from "rebass";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Recipe from "./Recipe";
-import Footer from "./Footer";
+import Home from "./components/Home";
+import Header from "./components/Header";
+import Recipe from "./components/Recipe";
+import Footer from "./components/Footer";
+import Login from "./components/Login";
+
 import Amplify from "aws-amplify";
 import aws_exports from "./aws-exports";
 import { Authenticator, Greetings, Loading } from "aws-amplify-react";
-import Login from "./Login";
 
 import "./App.css";
-// import { Authenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native'
 
 Amplify.configure(aws_exports);
 
@@ -38,8 +38,6 @@ const SignedIn = props => {
         </Router>
     );
 };
-
-const SignInButton = () => <button>Goober</button>;
 
 class App extends Component {
     render() {

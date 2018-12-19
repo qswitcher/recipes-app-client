@@ -5,7 +5,7 @@ import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
-import apiFacade from "./api/apiFacade";
+import apiFacade from "../api/apiFacade";
 
 class Home extends React.Component {
     constructor(props) {

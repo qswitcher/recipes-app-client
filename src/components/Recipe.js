@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
 import RecipeStats from "./RecipeStats";
-import apiFacade from "./api/apiFacade";
+import apiFacade from "../api/apiFacade";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
