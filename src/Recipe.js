@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Card, Flex, Image, Heading, Text } from "rebass";
-import { Recipes } from "./data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faEyeDropper,
@@ -9,8 +8,7 @@ import {
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
 import RecipeStats from "./RecipeStats";
-import { API, graphqlOperation } from "aws-amplify";
-import { getRecipe } from "./graphql/queries";
+import apiFacade from "./api/apiFacade";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
@@ -26,28 +24,28 @@ const NakedLi = styled.li`
     margin-bottom: ${({ theme: { space } }) => space[2]}px;
 `;
 
-const recipe = Recipes[0];
-
 class Recipe extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            checked: [...recipe.ingredients, ...recipe.instructions].map(
-                () => false
-            ),
+            checked: [],
             recipe: null
         };
     }
 
     componentDidMount() {
-        API.graphql(
-            graphqlOperation(getRecipe, {
-                id: "14a0b4d3-8c86-40f9-b62c-abbd99d3db26"
-            })
-        ).then(response => {
-            this.setState({ recipe: response.data.getRecipe });
-        });
+        apiFacade
+            .getRecipe("14a0b4d3-8c86-40f9-b62c-abbd99d3db26")
+            .then(recipe => {
+                this.setState({
+                    recipe,
+                    checked: [
+                        ...recipe.ingredients,
+                        ...recipe.instructions
+                    ].map(() => false)
+                });
+            });
     }
 
     handleIngredientChecked = index => event =>
@@ -56,7 +54,8 @@ class Recipe extends React.Component {
     handleStepChecked = index => event => this.handleChecked(index, "step");
 
     handleChecked = (index, type) => {
-        const offset = type === "step" ? recipe.ingredients.length : 0;
+        const offset =
+            type === "step" ? this.state.recipe.ingredients.length : 0;
         const checked = [...this.state.checked];
         checked[index + offset] = !checked[index + offset];
         this.setState({ checked });
@@ -92,7 +91,7 @@ class Recipe extends React.Component {
                                 {longDescription}
                             </Text>
                             <Flex mx="4">
-                                <RecipeStats {...recipe} size="md" />
+                                <RecipeStats {...recipe} size="1x" />
                             </Flex>
                         </Box>
 

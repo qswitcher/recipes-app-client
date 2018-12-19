@@ -3,10 +3,9 @@ import { Box, Card, Flex, Image, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { API, graphqlOperation } from "aws-amplify";
-import { listRecipes } from "./graphql/queries";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
+import apiFacade from "./api/apiFacade";
 
 class Home extends React.Component {
     constructor(props) {
@@ -15,8 +14,8 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        API.graphql(graphqlOperation(listRecipes)).then(response => {
-            this.setState({ recipes: response.data.listRecipes.items });
+        apiFacade.listRecipes().then(recipes => {
+            this.setState({ recipes });
         });
     }
 
