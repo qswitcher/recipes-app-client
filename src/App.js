@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Recipe from "./components/Recipe";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import EditRecipe from "./components/EditRecipe";
 
 import Amplify from "aws-amplify";
 import aws_exports from "./aws-exports";
@@ -32,6 +33,7 @@ const SignedIn = props => {
                 <Box py="4" px="2" css={{ flexGrow: 1 }}>
                     <Route path="/" exact component={Home} />
                     <Route path="/recipe/" component={Recipe} />
+                    <Route path="/edit/" component={EditRecipe} />
                 </Box>
                 <Footer />
             </Flex>

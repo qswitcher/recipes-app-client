@@ -3,7 +3,8 @@ import { Box, Card, Flex, Image, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faEyeDropper,
-    faSortNumericDown
+    faSortNumericDown,
+    faEdit
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
@@ -12,6 +13,10 @@ import apiFacade from "../api/apiFacade";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
+`;
+
+const MarginSpan = styled.span`
+    margin-right: ${props => props.theme.space[props.mr]}px;
 `;
 
 const List = styled.ul`
@@ -61,6 +66,10 @@ class Recipe extends React.Component {
         this.setState({ checked });
     };
 
+    handleClickEdit = () => {
+        alert("cliecked");
+    };
+
     render() {
         if (!this.state.recipe) {
             return null;
@@ -80,7 +89,12 @@ class Recipe extends React.Component {
                     <Flex flexWrap="wrap">
                         <Box width={[1, 1, 1, 0.4]}>
                             <Heading m="4" as="h1" color="gray.1">
-                                {title}
+                                <MarginSpan mr="3">{title}</MarginSpan>
+                                <FontAwesomeIcon
+                                    onClick={this.handleClickEdit}
+                                    icon={faEdit}
+                                    color="#6ba72b"
+                                />
                             </Heading>
                             <Text
                                 m="4"
