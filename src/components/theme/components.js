@@ -28,10 +28,11 @@ const StyledTextInput = styled.input`
     border-radius: 3px;
     width: 100%;
     box-sizing: border-box;
+    font-size: ${({ theme }) => theme.fontSizes[1]}px;
 `;
 
-export const TextInput = ({ id, value }) => (
-    <StyledTextInput name={id} id={id} value={value} />
+export const TextInput = ({ id, value, ...rest }) => (
+    <StyledTextInput name={id} id={id} value={value} {...rest} />
 );
 
 const StyledTextArea = styled.textarea`
@@ -43,10 +44,11 @@ const StyledTextArea = styled.textarea`
     border-radius: 3px;
     width: 100%;
     box-sizing: border-box;
+    font-size: ${({ theme }) => theme.fontSizes[1]}px;
 `;
 
-export const TextArea = ({ label, id, value }) => (
-    <StyledTextArea id={id} name={id} value={value} />
+export const TextArea = ({ label, id, value, ...rest }) => (
+    <StyledTextArea id={id} name={id} value={value} {...rest} />
 );
 
 export const PrimaryBtn = styled.button`

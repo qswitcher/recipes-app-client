@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
+import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 import apiFacade from "../api/apiFacade";
 
@@ -40,17 +41,19 @@ class Recipe extends React.Component {
     }
 
     componentDidMount() {
-        apiFacade
-            .getRecipe("14a0b4d3-8c86-40f9-b62c-abbd99d3db26")
-            .then(recipe => {
-                this.setState({
-                    recipe,
-                    checked: [
-                        ...recipe.ingredients,
-                        ...recipe.instructions
-                    ].map(() => false)
-                });
+        const {
+            match: {
+                params: { id }
+            }
+        } = this.props;
+        apiFacade.getRecipe(id).then(recipe => {
+            this.setState({
+                recipe,
+                checked: [...recipe.ingredients, ...recipe.instructions].map(
+                    () => false
+                )
             });
+        });
     }
 
     handleIngredientChecked = index => event =>
@@ -66,17 +69,20 @@ class Recipe extends React.Component {
         this.setState({ checked });
     };
 
-    handleClickEdit = () => {
-        alert("cliecked");
-    };
-
     render() {
         if (!this.state.recipe) {
             return null;
         }
         const recipe = this.state.recipe;
 
-        const { title, longDescription, ingredients, instructions } = recipe;
+        const {
+            id,
+            title,
+            thumbnail,
+            longDescription,
+            ingredients,
+            instructions
+        } = recipe;
         return (
             // <Flex flexWrap="wrap" m="auto" css={{ maxWidth: "72em" }}>
             <Box p="2" width={[1, 1, 1]} m="auto" css={{ maxWidth: "64em" }}>
@@ -90,11 +96,12 @@ class Recipe extends React.Component {
                         <Box width={[1, 1, 1, 0.4]}>
                             <Heading m="4" as="h1" color="gray.1">
                                 <MarginSpan mr="3">{title}</MarginSpan>
-                                <FontAwesomeIcon
-                                    onClick={this.handleClickEdit}
-                                    icon={faEdit}
-                                    color="#6ba72b"
-                                />
+                                <Link to={`/edit/${id}`}>
+                                    <FontAwesomeIcon
+                                        icon={faEdit}
+                                        color="#6ba72b"
+                                    />
+                                </Link>
                             </Heading>
                             <Text
                                 m="4"
@@ -110,7 +117,7 @@ class Recipe extends React.Component {
                         </Box>
 
                         <Image
-                            src="http://demo.djmimi.net/themes/recipe/wp-content/uploads/2015/02/france-confectionery-83373-848x477.jpg"
+                            src={thumbnail}
                             width={[1, 1, 1, 0.6]}
                             height="100%"
                         />

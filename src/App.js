@@ -32,8 +32,8 @@ const SignedIn = props => {
                 </Header>
                 <Box py="4" px="2" css={{ flexGrow: 1 }}>
                     <Route path="/" exact component={Home} />
-                    <Route path="/recipe/" component={Recipe} />
-                    <Route path="/edit/" component={EditRecipe} />
+                    <Route path="/recipe/:id" component={Recipe} />
+                    <Route path="/edit/:id" component={EditRecipe} />
                 </Box>
                 <Footer />
             </Flex>

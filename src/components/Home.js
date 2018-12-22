@@ -20,7 +20,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(this.state.recipes);
         return (
             <Flex
                 flexWrap="wrap"
@@ -30,6 +29,7 @@ class Home extends React.Component {
                 {this.state.recipes.map(
                     (
                         {
+                            id,
                             title,
                             shortDescription,
                             thumbnail,
@@ -53,11 +53,13 @@ class Home extends React.Component {
                                             height: "203px"
                                         }}
                                     >
-                                        <Image
-                                            src={thumbnail}
-                                            width={[1]}
-                                            height="203px"
-                                        />
+                                        <Link to={`/recipe/${id}`}>
+                                            <Image
+                                                src={thumbnail}
+                                                width={[1]}
+                                                height="203px"
+                                            />
+                                        </Link>
 
                                         <Box
                                             css={{
@@ -123,7 +125,7 @@ class Home extends React.Component {
                                     </Box>
 
                                     <Box p={3}>
-                                        <Link to="/recipe/">
+                                        <Link to={`/recipe/${id}`}>
                                             <Heading
                                                 as="h2"
                                                 fontWeight="400"
