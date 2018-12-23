@@ -58,7 +58,20 @@ export const PrimaryBtn = styled.button`
     border-radius: 3px;
     text-transform: none;
     font-size: ${({ theme }) => theme.fontSizes[1]}px;
-    lineheight: ${({ theme }) => theme.lineHeights[2]};
+    line-height: ${({ theme }) => theme.lineHeights[2]};
     padding: 5px 10px;
     min-width: 150px;
 `;
+
+const StyledAlert = styled.div`
+    padding: ${({ theme }) => theme.space[2]}px
+        ${({ theme }) => theme.space[3]}px;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: ${({ theme }) => theme.fontSizes[1]}px;
+    line-height: ${({ theme }) => theme.lineHeights[2]};
+    background: ${({ theme }) => theme.colors.red};
+`;
+
+export const AlertDanger = StyledAlert;

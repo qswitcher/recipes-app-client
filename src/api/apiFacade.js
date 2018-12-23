@@ -1,5 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 import { getRecipe, listRecipes } from "../graphql/queries";
+import { updateRecipe } from "../graphql/mutations";
 
 class ApiFacade {
     constructor() {
@@ -37,6 +38,16 @@ class ApiFacade {
             .catch(err => {
                 console.err(err);
             });
+    };
+
+    updateRecipe = recipe => {
+        return API.graphql(
+            graphqlOperation(updateRecipe, { input: recipe })
+        ).then(response => {
+            const r = response.data.updateRecipe;
+            this.cache.recipes[r.id] = r;
+            return r;
+        });
     };
 }
 

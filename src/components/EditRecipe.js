@@ -1,22 +1,31 @@
 import React from "react";
 import { Box, Card, Flex, Image, Heading } from "rebass";
-import { PrimaryBtn, Text, TextInput, TextArea, FormLabel } from "./theme";
+import {
+    AlertDanger,
+    PrimaryBtn,
+    Text,
+    TextInput,
+    TextArea,
+    FormLabel
+} from "./theme";
 import apiFacade from "../api/apiFacade";
+import { withRouter } from "react-router-dom";
 
 class EditRecipe extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            recipe: "",
-            title: "",
-            thumbnail: "",
-            longDescription: "",
-            ingredients: "",
-            instructions: "",
-            recipeYield: "",
-            servings: "",
-            cookTime: ""
+            recipe: {
+                title: "",
+                thumbnail: "",
+                longDescription: "",
+                ingredients: "",
+                instructions: "",
+                recipeYield: "",
+                servings: "",
+                cookTime: ""
+            }
         };
     }
 
@@ -27,24 +36,55 @@ class EditRecipe extends React.Component {
             }
         } = this.props;
         apiFacade.getRecipe(id).then(recipe => {
+            const sanitized = Object.keys(recipe).reduce((acc, k) => {
+                acc[k] = recipe[k] || "";
+                return acc;
+            }, {});
             this.setState({
-                ...recipe
+                recipe: sanitized
             });
         });
     }
 
+    validate = () => {
+        const required = ["title", "thumbnail", "ingredients", "instructions"];
+        console.log(this.state);
+
+        const missing = required.find(
+            key =>
+                !this.state.recipe[key] || this.state.recipe[key].length === 0
+        );
+        if (missing) {
+            this.setState({ error: `Field '${missing}' is required.` });
+        }
+        return !missing;
+    };
+
     handleSubmit = () => {
-        console.log("submit");
+        const { match } = this.props;
+        const id = (match && match.params && match.params.id) || null;
+        if (id && this.validate()) {
+            apiFacade.updateRecipe(this.state.recipe).then(
+                () => {
+                    this.props.history.push(`/recipe/${id}`);
+                },
+                ({ errors }) => {
+                    console.log(errors);
+                    this.setState({ error: "An unexpected error occurred" });
+                }
+            );
+        }
     };
 
     handleOnChange = event => {
         const id = event.target.id;
         let value = event.target.value;
         if (["ingredients", "instructions"].includes(id)) {
-            value = value.split(/\n+/);
-            console.log(value);
+            value = value.split(/\n+/).filter(v => !!v);
         }
-        this.setState({ [id]: value });
+        const { recipe } = this.state;
+        recipe[id] = value;
+        this.setState({ recipe });
     };
 
     render() {
@@ -58,7 +98,8 @@ class EditRecipe extends React.Component {
             recipeYield,
             servings,
             cookTime
-        } = this.state;
+        } = this.state.recipe;
+        const { error } = this.state;
         const { match } = this.props;
         const id = (match && match.params && match.params.id) || null;
         return (
@@ -75,12 +116,12 @@ class EditRecipe extends React.Component {
                     </Heading>
                     <Flex flexDirection="row" flexWrap="wrap">
                         <Box px="3" width={[1, 1 / 2]}>
-                            <Text>Image</Text>
+                            <Text>Image *</Text>
                             <Image src={thumbnail} />
                         </Box>
                         <Box px="3" width={[1, 1 / 2]}>
                             <Box width={[1]}>
-                                <FormLabel id="title" label="Title" />
+                                <FormLabel id="title" label="Title *" />
                                 <TextInput
                                     id="title"
                                     value={title}
@@ -137,7 +178,7 @@ class EditRecipe extends React.Component {
                             />
                         </Box>
                         <Box mx="3" width={[1]}>
-                            <FormLabel id="ingredients" label="Ingredients" />
+                            <FormLabel id="ingredients" label="Ingredients *" />
                             <TextArea
                                 id="ingredients"
                                 rows={ingredients ? ingredients.length : 5}
@@ -148,7 +189,10 @@ class EditRecipe extends React.Component {
                             />
                         </Box>
                         <Box mx="3" width={[1]}>
-                            <FormLabel id="instructions" label="Instructions" />
+                            <FormLabel
+                                id="instructions"
+                                label="Instructions *"
+                            />
                             <TextArea
                                 id="instructions"
                                 rows={
@@ -160,6 +204,12 @@ class EditRecipe extends React.Component {
                                 onChange={this.handleOnChange}
                             />
                         </Box>
+
+                        {error && (
+                            <Box m="3" width={[1]}>
+                                <AlertDanger>{error}</AlertDanger>
+                            </Box>
+                        )}
                         <Box m="3">
                             <PrimaryBtn onClick={this.handleSubmit} width="1">
                                 Save
@@ -172,4 +222,4 @@ class EditRecipe extends React.Component {
     }
 }
 
-export default EditRecipe;
+export default withRouter(EditRecipe);
