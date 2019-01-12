@@ -157,7 +157,10 @@ class EditRecipe extends React.Component {
                     <Flex flexDirection="row" flexWrap="wrap">
                         <Box px="3" width={[1, 1 / 2]}>
                             <Text>Image *</Text>
-                            <PhotoPicker onChange={this.handlePhoto} />
+                            <PhotoPicker
+                                imgKey={(photo || {}).key}
+                                onChange={this.handlePhoto}
+                            />
                         </Box>
                         <Box px="3" width={[1, 1 / 2]}>
                             <Box width={[1]}>
