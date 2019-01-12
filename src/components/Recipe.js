@@ -11,6 +11,8 @@ import Checkbox from "./Checkbox";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 import apiFacade from "../api/apiFacade";
+import { Storage } from "aws-amplify";
+import { S3Image } from "aws-amplify-react";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
@@ -47,6 +49,7 @@ class Recipe extends React.Component {
             }
         } = this.props;
         apiFacade.getRecipe(id).then(recipe => {
+            console.log(recipe);
             this.setState({
                 recipe,
                 checked: [...recipe.ingredients, ...recipe.instructions].map(
@@ -78,11 +81,12 @@ class Recipe extends React.Component {
         const {
             id,
             title,
-            thumbnail,
+            photo,
             longDescription,
             ingredients,
             instructions
         } = recipe;
+        console.log(photo);
         return (
             // <Flex flexWrap="wrap" m="auto" css={{ maxWidth: "72em" }}>
             <Box p="2" width={[1, 1, 1]} m="auto" css={{ maxWidth: "64em" }}>
@@ -115,12 +119,16 @@ class Recipe extends React.Component {
                                 <RecipeStats {...recipe} size="1x" />
                             </Flex>
                         </Box>
-
-                        <Image
-                            src={thumbnail}
-                            width={[1, 1, 1, 0.6]}
-                            height="100%"
-                        />
+                        <Box width={[1, 1, 1, 0.6]}>
+                            <S3Image
+                                imgKey={photo.key.split("/")[1]}
+                                theme={{
+                                    photoImg: {
+                                        width: "100%"
+                                    }
+                                }}
+                            />
+                        </Box>
                     </Flex>
 
                     <Box>

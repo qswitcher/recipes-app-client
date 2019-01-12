@@ -10,13 +10,25 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import EditRecipe from "./components/EditRecipe";
 
-import Amplify from "aws-amplify";
+import Amplify, { Auth } from "aws-amplify";
 import aws_exports from "./aws-exports";
 import { Authenticator, Greetings, Loading } from "aws-amplify-react";
-
+import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import "./App.css";
+import { ApolloProvider } from "react-apollo";
 
 Amplify.configure(aws_exports);
+
+const client = new AWSAppSyncClient({
+    url: aws_exports.aws_appsync_graphqlEndpoint,
+    region: aws_exports.aws_appsync_region,
+    auth: {
+        type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+        jwtToken: async () =>
+            (await Auth.currentSession()).getAccessToken().getJwtToken()
+    },
+    complexObjectsCredentials: () => Auth.currentCredentials()
+});
 
 const Dummy = () => null;
 
@@ -44,52 +56,54 @@ const SignedIn = props => {
 class App extends Component {
     render() {
         return (
-            <ThemeProvider theme={theme}>
-                <Authenticator
-                    authState="signIn"
-                    onStateChange={authState => console.log(authState)}
-                    hide={[Greetings, Loading]}
-                    theme={{
-                        formSection: {
-                            borderRadius: "3px",
-                            boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)"
-                        },
-                        button: {
-                            backgroundColor: "#6ba72b",
-                            borderRadius: "3px",
-                            textTransform: "none",
-                            fontSize: "14px",
-                            lineHeight: "24px",
-                            padding: "5px 10px"
-                        },
-                        sectionHeader: {
-                            color: "#676767",
-                            fontSize: "28px",
-                            lineHeight: "1.25"
-                        },
-                        formField: {
-                            color: "#676767"
-                        },
-                        inputLabel: {
-                            color: "#676767"
-                        },
-                        input: {
-                            color: "#676767",
-                            backgroundColor: "#f5f5f5",
-                            border: "none",
-                            lineHeight: "24px",
-                            padding: "6px 12px"
-                        },
-                        a: {
-                            color: "#6ba72b"
-                        }
-                    }}
-                >
-                    {/* Authenticator expects an array of components, so this ones just a dummy*/}
-                    <Dummy />
-                    <SignedIn />
-                </Authenticator>
-            </ThemeProvider>
+            <ApolloProvider client={client}>
+                <ThemeProvider theme={theme}>
+                    <Authenticator
+                        authState="signIn"
+                        onStateChange={authState => console.log(authState)}
+                        hide={[Greetings, Loading]}
+                        theme={{
+                            formSection: {
+                                borderRadius: "3px",
+                                boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)"
+                            },
+                            button: {
+                                backgroundColor: "#6ba72b",
+                                borderRadius: "3px",
+                                textTransform: "none",
+                                fontSize: "14px",
+                                lineHeight: "24px",
+                                padding: "5px 10px"
+                            },
+                            sectionHeader: {
+                                color: "#676767",
+                                fontSize: "28px",
+                                lineHeight: "1.25"
+                            },
+                            formField: {
+                                color: "#676767"
+                            },
+                            inputLabel: {
+                                color: "#676767"
+                            },
+                            input: {
+                                color: "#676767",
+                                backgroundColor: "#f5f5f5",
+                                border: "none",
+                                lineHeight: "24px",
+                                padding: "6px 12px"
+                            },
+                            a: {
+                                color: "#6ba72b"
+                            }
+                        }}
+                    >
+                        {/* Authenticator expects an array of components, so this ones just a dummy*/}
+                        <Dummy />
+                        <SignedIn />
+                    </Authenticator>
+                </ThemeProvider>
+            </ApolloProvider>
         );
     }
 }

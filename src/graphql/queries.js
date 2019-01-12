@@ -13,6 +13,11 @@ export const getRecipe = `query GetRecipe($id: ID!) {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;
@@ -33,6 +38,11 @@ export const listRecipes = `query ListRecipes(
       cookTime
       ingredients
       instructions
+      photo {
+        bucket
+        key
+        region
+      }
     }
     nextToken
   }

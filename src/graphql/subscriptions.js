@@ -13,6 +13,11 @@ export const onCreateRecipe = `subscription OnCreateRecipe {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;
@@ -28,6 +33,11 @@ export const onUpdateRecipe = `subscription OnUpdateRecipe {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;
@@ -43,6 +53,11 @@ export const onDeleteRecipe = `subscription OnDeleteRecipe {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;

@@ -13,6 +13,11 @@ export const createRecipe = `mutation CreateRecipe($input: CreateRecipeInput!) {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;
@@ -28,6 +33,11 @@ export const updateRecipe = `mutation UpdateRecipe($input: UpdateRecipeInput!) {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;
@@ -43,6 +53,11 @@ export const deleteRecipe = `mutation DeleteRecipe($input: DeleteRecipeInput!) {
     cookTime
     ingredients
     instructions
+    photo {
+      bucket
+      key
+      region
+    }
   }
 }
 `;

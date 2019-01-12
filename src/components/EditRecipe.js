@@ -10,6 +10,10 @@ import {
 } from "./theme";
 import apiFacade from "../api/apiFacade";
 import { withRouter } from "react-router-dom";
+import { withApollo } from "react-apollo";
+import { updateRecipe } from "../graphql/mutations";
+import gql from "graphql-tag";
+import PhotoPicker from "./PhotoPicker";
 
 class EditRecipe extends React.Component {
     constructor(props) {
@@ -24,7 +28,8 @@ class EditRecipe extends React.Component {
                 instructions: "",
                 recipeYield: "",
                 servings: "",
-                cookTime: ""
+                cookTime: "",
+                photo: undefined
             }
         };
     }
@@ -61,18 +66,33 @@ class EditRecipe extends React.Component {
     };
 
     handleSubmit = () => {
-        const { match } = this.props;
+        const { match, client } = this.props;
+        const { recipe } = this.state;
         const id = (match && match.params && match.params.id) || null;
         if (id && this.validate()) {
-            apiFacade.updateRecipe(this.state.recipe).then(
-                () => {
-                    this.props.history.push(`/recipe/${id}`);
-                },
-                ({ errors }) => {
-                    console.log(errors);
-                    this.setState({ error: "An unexpected error occurred" });
-                }
-            );
+            client
+                .mutate({
+                    mutation: gql(updateRecipe),
+                    variables: {
+                        input: recipe
+                    }
+                })
+                .then(
+                    response => {
+                        console.log(response);
+                    },
+                    errors => console.log(errors)
+                );
+
+            // apiFacade.updateRecipe(this.state.recipe).then(
+            //     () => {
+            //         this.props.history.push(`/recipe/${id}`);
+            //     },
+            //     ({ errors }) => {
+            //         console.log(errors);
+            //         this.setState({ error: "An unexpected error occurred" });
+            //     }
+            // );
         }
     };
 
@@ -87,21 +107,41 @@ class EditRecipe extends React.Component {
         this.setState({ recipe });
     };
 
+    handlePhoto = file => {
+        const { recipe } = this.state;
+        recipe.photo = file;
+
+        this.setState({
+            recipe,
+            tempImageUrl: URL.createObjectURL(file.localUri)
+        });
+    };
+
     render() {
         const {
             title,
-            thumbnail,
             longDescription,
             shortDescription,
             ingredients,
             instructions,
             recipeYield,
             servings,
-            cookTime
+            cookTime,
+            photo
         } = this.state.recipe;
         const { error } = this.state;
         const { match } = this.props;
         const id = (match && match.params && match.params.id) || null;
+
+        // const renderImage = ({ photo, tempImageUrl }) => {
+        //     if (tempImageUrl) {
+        //         return <img src={tempImageUrl} alt="Recipe" />;
+        //     } else if (photo) {
+        //         return <S3Image key={photo.key} />;
+        //     }
+        // };
+        console.log(this.state.previewSrc);
+
         return (
             <Box width={[1, 1, 1]} m="auto" css={{ maxWidth: "64em" }}>
                 <Card
@@ -117,7 +157,7 @@ class EditRecipe extends React.Component {
                     <Flex flexDirection="row" flexWrap="wrap">
                         <Box px="3" width={[1, 1 / 2]}>
                             <Text>Image *</Text>
-                            <Image src={thumbnail} />
+                            <PhotoPicker onChange={this.handlePhoto} />
                         </Box>
                         <Box px="3" width={[1, 1 / 2]}>
                             <Box width={[1]}>
@@ -222,4 +262,4 @@ class EditRecipe extends React.Component {
     }
 }
 
-export default withRouter(EditRecipe);
+export default withApollo(withRouter(EditRecipe));
