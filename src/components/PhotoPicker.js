@@ -6,6 +6,25 @@ import styled from "styled-components";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const PreviewImage = styled.img`
+    width: 100%;
+
+    ::before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+`;
+
+const MaskImg = styled.img`
+    width: 100%;
+    opacity: 0.4;
+    position: absolute;
+`;
+
 const ImgInput = styled.input`
     width: 100%;
     height: 100%;
@@ -96,16 +115,34 @@ class PhotoPicker extends React.Component {
         reader.readAsDataURL(file);
     };
 
+    loadCrop = () => {
+        const img = document.getElementById("recipe-photo-preview");
+        const height = img.clientHeight;
+        const width = img.clientWidth;
+        const ratio = 477 / 848;
+        console.log(img.clientHeight);
+        console.log(img.clientWidth);
+        if (height / width > ratio) {
+            const diff = (height - ratio * width) / 2;
+            img.style["clip-path"] = `inset(${diff}px 0 ${diff}px 0)`;
+        } else {
+            const diff = (width - height / ratio) / 2;
+            img.style["clip-path"] = `inset(0 ${diff}px 0 ${diff}px)`;
+        }
+    };
+
     render() {
         const { previewSrc } = this.state;
         return (
             <PhotoPickerDiv>
                 {previewSrc && (
                     <React.Fragment>
-                        <img
-                            width="100%"
+                        <MaskImg src={this.state.previewSrc} alt="Preview" />
+                        <PreviewImage
+                            id="recipe-photo-preview"
                             src={this.state.previewSrc}
                             alt="Preview"
+                            onLoad={this.loadCrop}
                         />
                         <CameraIcon>
                             <FontAwesomeIcon icon={faCamera} />
