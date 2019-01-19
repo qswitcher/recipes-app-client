@@ -47,7 +47,7 @@ class Checkbox extends React.Component {
             <FlexLabel align={align}>
                 <HiddenInput
                     type="checkbox"
-                    checked={checked}
+                    value={checked}
                     onChange={onCheck}
                 />
                 <Toggle checked={checked}>
