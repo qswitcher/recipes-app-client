@@ -8,21 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PreviewImage = styled.img`
     width: 100%;
-
-    ::before {
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-`;
-
-const MaskImg = styled.img`
-    width: 100%;
-    opacity: 0.4;
-    position: absolute;
+    display: block;
 `;
 
 const ImgInput = styled.input`
@@ -54,6 +40,18 @@ const CameraIcon = styled.div`
 const PhotoPickerDiv = styled.div`
     position: relative;
 
+    &::before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.4;
+        background-size: contain;
+        background-image: url(${({ previewSrc }) => previewSrc});
+    }
+
     :hover {
         div${CameraIcon} {
             background: rgba(0, 0, 0, 0.8);
@@ -64,7 +62,10 @@ const PhotoPickerDiv = styled.div`
 class PhotoPicker extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { previewSrc: undefined };
+        this.state = {
+            previewSrc:
+                "https://s3.amazonaws.com/recipes-uploads/public/placeholder.jpg"
+        };
     }
 
     componentDidMount() {
@@ -79,16 +80,14 @@ class PhotoPicker extends React.Component {
         });
     };
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.imgKey !== this.props.imgKey) {
-            this.load(this.props.imgKey);
-            // this.setState({ });
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.imgKey !== this.props.imgKey) {
+    //         this.load(this.props.imgKey);
+    //     }
+    // }
 
     handleOnChange = e => {
         const file = e.target.files[0];
-        const previewSrc = e.target.result;
 
         // selectedFile is the file to be uploaded, typically comes from an <input type="file" />
         const { name, type: mimeType } = file;
@@ -120,8 +119,7 @@ class PhotoPicker extends React.Component {
         const height = img.clientHeight;
         const width = img.clientWidth;
         const ratio = 477 / 848;
-        console.log(img.clientHeight);
-        console.log(img.clientWidth);
+
         if (height / width > ratio) {
             const diff = (height - ratio * width) / 2;
             img.style["clip-path"] = `inset(${diff}px 0 ${diff}px 0)`;
@@ -134,10 +132,9 @@ class PhotoPicker extends React.Component {
     render() {
         const { previewSrc } = this.state;
         return (
-            <PhotoPickerDiv>
+            <PhotoPickerDiv previewSrc={this.state.previewSrc}>
                 {previewSrc && (
                     <React.Fragment>
-                        <MaskImg src={this.state.previewSrc} alt="Preview" />
                         <PreviewImage
                             id="recipe-photo-preview"
                             src={this.state.previewSrc}

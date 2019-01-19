@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, Flex, Image, Heading, Text } from "rebass";
+import { Box, Card, Flex, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faEyeDropper,
@@ -11,8 +11,7 @@ import Checkbox from "./Checkbox";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 import apiFacade from "../api/apiFacade";
-import { Storage } from "aws-amplify";
-import { S3Image } from "aws-amplify-react";
+import Photo from "./Photo";
 
 const RightSpan = styled.span`
     margin-left: ${props => props.theme.space[3]}px;
@@ -120,14 +119,7 @@ class Recipe extends React.Component {
                             </Flex>
                         </Box>
                         <Box width={[1, 1, 1, 0.6]}>
-                            <S3Image
-                                imgKey={photo.key.split("/")[1]}
-                                theme={{
-                                    photoImg: {
-                                        width: "100%"
-                                    }
-                                }}
-                            />
+                            <Photo photo={photo} />
                         </Box>
                     </Flex>
 

@@ -53,7 +53,6 @@ class EditRecipe extends React.Component {
 
     validate = () => {
         const required = ["title", "thumbnail", "ingredients", "instructions"];
-        console.log(this.state);
 
         const missing = required.find(
             key =>
@@ -79,20 +78,15 @@ class EditRecipe extends React.Component {
                 })
                 .then(
                     response => {
-                        console.log(response);
+                        this.props.history.push(`/recipe/${id}`);
                     },
-                    errors => console.log(errors)
+                    errors => {
+                        this.setState({
+                            error: "An unexpected error occurred"
+                        });
+                        console.log(errors);
+                    }
                 );
-
-            // apiFacade.updateRecipe(this.state.recipe).then(
-            //     () => {
-            //         this.props.history.push(`/recipe/${id}`);
-            //     },
-            //     ({ errors }) => {
-            //         console.log(errors);
-            //         this.setState({ error: "An unexpected error occurred" });
-            //     }
-            // );
         }
     };
 
@@ -110,10 +104,8 @@ class EditRecipe extends React.Component {
     handlePhoto = file => {
         const { recipe } = this.state;
         recipe.photo = file;
-
         this.setState({
-            recipe,
-            tempImageUrl: URL.createObjectURL(file.localUri)
+            recipe
         });
     };
 
@@ -129,18 +121,10 @@ class EditRecipe extends React.Component {
             cookTime,
             photo
         } = this.state.recipe;
+
         const { error } = this.state;
         const { match } = this.props;
         const id = (match && match.params && match.params.id) || null;
-
-        // const renderImage = ({ photo, tempImageUrl }) => {
-        //     if (tempImageUrl) {
-        //         return <img src={tempImageUrl} alt="Recipe" />;
-        //     } else if (photo) {
-        //         return <S3Image key={photo.key} />;
-        //     }
-        // };
-        console.log(this.state.previewSrc);
 
         return (
             <Box width={[1, 1, 1]} m="auto" css={{ maxWidth: "64em" }}>
