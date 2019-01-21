@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, Flex, Image, Heading } from "rebass";
+import { Box, Card, Flex, Heading } from "rebass";
 import {
     AlertDanger,
     PrimaryBtn,
@@ -14,6 +14,8 @@ import { withApollo } from "react-apollo";
 import { updateRecipe } from "../graphql/mutations";
 import gql from "graphql-tag";
 import PhotoPicker from "./PhotoPicker";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const sanitize = recipe => {
     return Object.entries(recipe).reduce((acc, entry) => {
@@ -29,6 +31,7 @@ class EditRecipe extends React.Component {
         super(props);
 
         this.state = {
+            saving: false,
             recipe: {
                 title: "",
                 thumbnail: "",
@@ -75,9 +78,14 @@ class EditRecipe extends React.Component {
 
     handleSubmit = () => {
         const { match, client } = this.props;
-        const { recipe } = this.state;
+        const { recipe, saving } = this.state;
+        if (saving) {
+            return;
+        }
+
         const id = (match && match.params && match.params.id) || null;
         if (id && this.validate()) {
+            this.setState({ saving: true });
             client
                 .mutate({
                     mutation: gql(updateRecipe),
@@ -91,7 +99,8 @@ class EditRecipe extends React.Component {
                     },
                     errors => {
                         this.setState({
-                            error: "An unexpected error occurred"
+                            error: "An unexpected error occurred",
+                            saving: false
                         });
                         console.log(errors);
                     }
@@ -130,6 +139,7 @@ class EditRecipe extends React.Component {
             cookTime,
             photo
         } = this.state.recipe;
+        const { saving } = this.state;
 
         const { error } = this.state;
         const { match } = this.props;
@@ -247,8 +257,16 @@ class EditRecipe extends React.Component {
                             </Box>
                         )}
                         <Box m="3">
-                            <PrimaryBtn onClick={this.handleSubmit} width="1">
-                                Save
+                            <PrimaryBtn
+                                disabled={saving}
+                                loading={saving}
+                                onClick={this.handleSubmit}
+                                width="1"
+                            >
+                                {(saving && (
+                                    <FontAwesomeIcon spin icon={faSync} />
+                                )) ||
+                                    "Save"}
                             </PrimaryBtn>
                         </Box>
                     </Flex>

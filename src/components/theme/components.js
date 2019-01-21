@@ -61,6 +61,7 @@ export const PrimaryBtn = styled.button`
     line-height: ${({ theme }) => theme.lineHeights[2]};
     padding: 5px 10px;
     min-width: 150px;
+    opacity: ${({ loading }) => (loading ? 0.4 : 1)};
 `;
 
 const StyledAlert = styled.div`

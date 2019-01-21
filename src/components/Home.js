@@ -8,6 +8,7 @@ import RecipeStats from "./RecipeStats";
 import { Query } from "react-apollo";
 import { listRecipes } from "../graphql/queries";
 import gql from "graphql-tag";
+import Photo from "./Photo";
 
 class Home extends React.Component {
     render() {
@@ -36,10 +37,10 @@ class Home extends React.Component {
                                         id,
                                         title,
                                         shortDescription,
-                                        thumbnail,
                                         recipeYield,
                                         cookTime,
-                                        servings
+                                        servings,
+                                        photo
                                     },
                                     i
                                 ) => {
@@ -62,11 +63,13 @@ class Home extends React.Component {
                                                     }}
                                                 >
                                                     <Link to={`/recipe/${id}`}>
+                                                        <Photo photo={photo} />
+                                                        {/* 
                                                         <Image
                                                             src={thumbnail}
                                                             width={[1]}
                                                             height="203px"
-                                                        />
+                                                        /> */}
                                                     </Link>
 
                                                     <Box
