@@ -15,6 +15,15 @@ import { updateRecipe } from "../graphql/mutations";
 import gql from "graphql-tag";
 import PhotoPicker from "./PhotoPicker";
 
+const sanitize = recipe => {
+    return Object.entries(recipe).reduce((acc, entry) => {
+        if (entry[1] !== "") {
+            acc[entry[0]] = entry[1];
+        }
+        return acc;
+    }, {});
+};
+
 class EditRecipe extends React.Component {
     constructor(props) {
         super(props);
@@ -73,7 +82,7 @@ class EditRecipe extends React.Component {
                 .mutate({
                     mutation: gql(updateRecipe),
                     variables: {
-                        input: recipe
+                        input: sanitize(recipe)
                     }
                 })
                 .then(
