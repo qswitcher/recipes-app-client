@@ -42,11 +42,17 @@ const SignedIn = props => {
                 <Header>
                     <Login {...props} />
                 </Header>
-                <Box py="4" px="2" css={{ flexGrow: 1 }}>
+                <Flex
+                    py="2"
+                    px="2"
+                    css={{ flexGrow: 1 }}
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Route path="/" exact component={Home} />
                     <Route path="/recipe/:id" component={Recipe} />
                     <Route path="/edit/:id" component={EditRecipe} />
-                </Box>
+                </Flex>
                 <Footer />
             </Flex>
         </Router>

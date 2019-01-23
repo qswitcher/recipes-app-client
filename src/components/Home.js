@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Card, Flex, Image, Heading, Text } from "rebass";
+import { Box, Card, Flex, Heading, Text } from "rebass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faSync } from "@fortawesome/free-solid-svg-icons";
 import Link from "./Link";
 import RecipeStats from "./RecipeStats";
 import { Query } from "react-apollo";
@@ -21,7 +21,14 @@ class Home extends React.Component {
                     }
 
                     if (loading) {
-                        return null;
+                        return (
+                            <FontAwesomeIcon
+                                spin
+                                icon={faSync}
+                                size="4x"
+                                color="#676767"
+                            />
+                        );
                     }
 
                     const recipes = data.listRecipes.items;
@@ -58,18 +65,11 @@ class Home extends React.Component {
                                             >
                                                 <Box
                                                     css={{
-                                                        position: "relative",
-                                                        height: "203px"
+                                                        position: "relative"
                                                     }}
                                                 >
                                                     <Link to={`/recipe/${id}`}>
                                                         <Photo photo={photo} />
-                                                        {/* 
-                                                        <Image
-                                                            src={thumbnail}
-                                                            width={[1]}
-                                                            height="203px"
-                                                        /> */}
                                                     </Link>
 
                                                     <Box
